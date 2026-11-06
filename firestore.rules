@@ -1,0 +1,158 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-\\.]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'denyprass37@gmail.com' ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner')
+      );
+    }
+
+    function isValidStudent(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.nis is string && data.nis.size() <= 32 &&
+             data.name is string && data.name.size() > 0 && data.name.size() <= 128 &&
+             data.classGroup is string && data.classGroup.size() <= 32 &&
+             data.gender is string && (data.gender == 'L' || data.gender == 'P') &&
+             data.grade is string && data.grade.size() <= 10;
+    }
+
+    function isValidGradeRecord(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.studentId is string && data.studentId.size() <= 128 &&
+             data.studentName is string && data.studentName.size() <= 128 &&
+             data.nis is string && data.nis.size() <= 32 &&
+             data.tpId is string && data.tpId.size() <= 64 &&
+             data.element is string && data.element.size() <= 64 &&
+             data.grade is string && data.grade.size() <= 10 &&
+             data.nilaiAkhir is number;
+    }
+
+    function isValidCbtResult(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.studentName is string && data.studentName.size() <= 128 &&
+             data.nis is string && data.nis.size() <= 32 &&
+             data.score is number &&
+             data.totalQuestions is number;
+    }
+
+    function isValidUser(data) {
+      return data.uid is string && data.uid.size() <= 128 &&
+             data.displayName is string && data.displayName.size() <= 128 &&
+             data.role is string && (data.role == 'owner' || data.role == 'licensed' || data.role == 'demo') &&
+             data.status is string && (data.status == 'active' || data.status == 'suspended' || data.status == 'expired') &&
+             data.workspaceId is string && data.workspaceId.size() <= 128;
+    }
+
+    function isValidLicense(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.code is string && data.code.size() <= 64 &&
+             data.packageName is string && data.packageName.size() <= 128 &&
+             data.packageType is string &&
+             data.status is string && (data.status == 'active' || data.status == 'inactive' || data.status == 'revoked' || data.status == 'expired') &&
+             data.maxActivations is number;
+    }
+
+    function isValidDemoSetting(data) {
+      return data.demoEnabled is bool &&
+             data.maxQuestionsPerGeneration is number &&
+             data.maxGenerationsPerSession is number;
+    }
+
+    function isValidDemoSession(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.usageCount is number &&
+             data.maxUsage is number;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Test connection check for boot
+    match /test/{testId} {
+      allow read: if true;
+    }
+
+    // Master data siswa PAIBP
+    match /students/{studentId} {
+      allow read: if true;
+      allow create, update: if isValidId(studentId) && isValidStudent(incoming());
+      allow delete: if isValidId(studentId);
+    }
+
+    // Rekap buku nilai 3 ranah PAIBP
+    match /grade_records/{recordId} {
+      allow read: if true;
+      allow create, update: if isValidId(recordId) && isValidGradeRecord(incoming());
+      allow delete: if isValidId(recordId);
+    }
+
+    // Hasil ujian CBT peserta didik
+    match /cbt_results/{resultId} {
+      allow read: if true;
+      allow create, update: if isValidId(resultId) && isValidCbtResult(incoming());
+      allow delete: if isValidId(resultId);
+    }
+
+    // Profil pengguna multi-user
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if isValidId(userId) && isValidUser(incoming());
+      allow delete: if isSuperAdmin();
+    }
+
+    // Data kode lisensi
+    match /licenses/{licenseId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Pengaturan mode demo
+    match /demo_settings/{configId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Sesi pengguna demo
+    match /demo_sessions/{sessionId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(sessionId) && isValidDemoSession(incoming());
+    }
+
+    // Bank soal hasil generate dan kustom pengguna
+    match /custom_bank_questions/{questionId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Ujian CBT yang dipublikasikan untuk dibagikan ke peserta didik
+    match /published_exams/{examId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Log audit sistem
+    match /audit_logs/{logId} {
+      allow read: if true;
+      allow create: if isValidId(logId);
+      allow update, delete: if isSuperAdmin();
+    }
+  }
+}

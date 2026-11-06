@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        // Prevent Vite HMR WebSocket from throwing unhandled disconnection errors in AI Studio iframe
+        try {
+          var OriginalWebSocket = window.WebSocket;
+          if (OriginalWebSocket) {
+            window.WebSocket = function(url, protocols) {
+              if (
+                protocols === 'vite-hmr' ||
+                (typeof url === 'string' && (url.indexOf('vite') !== -1 || url.indexOf('@vite') !== -1))
+              ) {
+                // Return a harmless dummy WebSocket that never triggers uncaught errors
+                var noop = function() {};
+                var dummy = {
+                  binaryType: 'blob',
+                  bufferedAmount: 0,
+                  extensions: '',
+                  protocol: protocols || '',
+                  readyState: 3, // CLOSED
+                  url: url,
+                  CONNECTING: 0,
+                  OPEN: 1,
+                  CLOSING: 2,
+                  CLOSED: 3,
+                  onopen: null,
+                  onclose: null,
+                  onerror: null,
+                  onmessage: null,
+                  send: noop,
+                  close: noop,
+                  addEventListener: noop,
+                  removeEventListener: noop,
+                  dispatchEvent: function() { return false; }
+                };
+                return dummy;
+              }
+              return new (Function.prototype.bind.apply(OriginalWebSocket, [null].concat(Array.prototype.slice.call(arguments))));
+            };
+            window.WebSocket.prototype = OriginalWebSocket.prototype;
+            window.WebSocket.CONNECTING = 0;
+            window.WebSocket.OPEN = 1;
+            window.WebSocket.CLOSING = 2;
+            window.WebSocket.CLOSED = 3;
+          }
+        } catch (e) {
+          // Ignore
+        }
+
+        // Global capture-phase error & unhandled rejection suppression for Vite HMR
+        window.addEventListener('error', function(e) {
+          var msg = (e && e.message) ? String(e.message) : '';
+          if (msg.indexOf('WebSocket') !== -1 || msg.indexOf('closed without opened') !== -1 || msg.indexOf('@vite/client') !== -1) {
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            if (e.preventDefault) e.preventDefault();
+            return true;
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = (e && e.reason) ? String(e.reason.message || e.reason) : '';
+          if (reason.indexOf('WebSocket') !== -1 || reason.indexOf('closed without opened') !== -1 || reason.indexOf('@vite/client') !== -1) {
+            if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+            if (e.preventDefault) e.preventDefault();
+          }
+        });
+      })();
+    </script>
+    <title>PAIBP FASE D SMART LEARNING PRO 2026 – Multi-User & CBT Asesmen</title>
+    <meta name="description" content="Aplikasi Pembuat Soal dan Asesmen Pendidikan Agama Islam dan Budi Pekerti SMP Fase D (Kelas VII, VIII, IX) Multi-User dengan Kode Lisensi, CBT Anti-Curang, dan Buku Nilai 3 Ranah" />
+    <meta property="og:title" content="PAIBP FASE D SMART LEARNING PRO 2026 – Multi-User & CBT Asesmen" />
+    <meta property="og:description" content="Aplikasi Pembuat Soal dan Asesmen Pendidikan Agama Islam dan Budi Pekerti SMP Fase D (Kelas VII, VIII, IX) Multi-User dengan Kode Lisensi, CBT Anti-Curang, dan Buku Nilai 3 Ranah" />
+    <meta name="theme-color" content="#059669" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PAIBP 2026" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

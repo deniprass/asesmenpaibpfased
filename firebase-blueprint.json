@@ -1,0 +1,189 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Informasi master data siswa PAIBP (NIS, Nama, Kelas, Gender) hasil import dan input",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nis": { "type": "string", "maxLength": 32 },
+        "nisn": { "type": "string", "maxLength": 32 },
+        "name": { "type": "string", "maxLength": 128 },
+        "classGroup": { "type": "string", "maxLength": 32 },
+        "gender": { "type": "string", "enum": ["L", "P"], "maxLength": 2 },
+        "grade": { "type": "string", "maxLength": 10 },
+        "semester": { "type": "string", "maxLength": 10 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "nis", "name", "classGroup", "gender", "grade"]
+    },
+    "GradeRecord": {
+      "title": "GradeRecord",
+      "description": "Catatan rekap nilai 3 ranah capaian pembelajaran siswa",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 128 },
+        "nis": { "type": "string", "maxLength": 32 },
+        "classGroup": { "type": "string", "maxLength": 32 },
+        "tpId": { "type": "string", "maxLength": 64 },
+        "tpText": { "type": "string", "maxLength": 500 },
+        "element": { "type": "string", "maxLength": 64 },
+        "grade": { "type": "string", "maxLength": 10 },
+        "semester": { "type": "string", "maxLength": 10 },
+        "nilaiAkhir": { "type": "number" },
+        "isTuntas": { "type": "boolean" },
+        "deskripsiCapaian": { "type": "string", "maxLength": 1000 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "studentId", "studentName", "nis", "tpId", "element", "grade", "nilaiAkhir"]
+    },
+    "CbtResult": {
+      "title": "CbtResult",
+      "description": "Hasil ujian CBT langsung siswa PAIBP",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 128 },
+        "nis": { "type": "string", "maxLength": 32 },
+        "classGroup": { "type": "string", "maxLength": 32 },
+        "examTitle": { "type": "string", "maxLength": 200 },
+        "element": { "type": "string", "maxLength": 64 },
+        "score": { "type": "number" },
+        "predicate": { "type": "string", "maxLength": 32 },
+        "totalQuestions": { "type": "number" },
+        "correctAnswers": { "type": "number" },
+        "wrongAnswers": { "type": "number" },
+        "timeSpentSeconds": { "type": "number" },
+        "submittedAt": { "type": "string", "maxLength": 64 },
+        "workspaceId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["id", "studentName", "nis", "score", "totalQuestions"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Profil pengguna multi-user (Owner, Guru Berlisensi, Demo) dengan ruang kerja terisolasi",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 128 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["owner", "licensed", "demo"] },
+        "status": { "type": "string", "enum": ["active", "suspended", "expired"] },
+        "schoolName": { "type": "string", "maxLength": 128 },
+        "licenseId": { "type": "string", "maxLength": 128 },
+        "licenseCode": { "type": "string", "maxLength": 64 },
+        "packageName": { "type": "string", "maxLength": 128 },
+        "expiresAt": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "lastLoginAt": { "type": "string", "maxLength": 64 },
+        "workspaceId": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["uid", "displayName", "role", "status", "workspaceId"]
+    },
+    "License": {
+      "title": "License",
+      "description": "Kode lisensi rahasia yang diterbitkan Owner untuk aktivasi akses guru",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "code": { "type": "string", "maxLength": 64 },
+        "codeHash": { "type": "string", "maxLength": 128 },
+        "packageName": { "type": "string", "maxLength": 128 },
+        "packageType": { "type": "string", "enum": ["individual", "institution", "period", "custom"] },
+        "status": { "type": "string", "enum": ["active", "inactive", "revoked", "expired"] },
+        "maxActivations": { "type": "number" },
+        "currentActivations": { "type": "number" },
+        "durationDays": { "type": "number" },
+        "expiresAt": { "type": "string", "maxLength": 64 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "internalNote": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["id", "code", "packageName", "packageType", "status", "maxActivations"]
+    },
+    "DemoSetting": {
+      "title": "DemoSetting",
+      "description": "Pengaturan Mode Demo yang dapat dikonfigurasi dinamis oleh Owner",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "demoEnabled": { "type": "boolean" },
+        "maxQuestionsPerGeneration": { "type": "number" },
+        "maxGenerationsPerSession": { "type": "number" },
+        "dailyLimit": { "type": "number" },
+        "exportEnabled": { "type": "boolean" },
+        "persistenceEnabled": { "type": "boolean" },
+        "demoMessage": { "type": "string", "maxLength": 1000 },
+        "activateButtonText": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "maxLength": 64 },
+        "updatedBy": { "type": "string", "maxLength": 128 }
+      },
+      "required": ["demoEnabled", "maxQuestionsPerGeneration", "maxGenerationsPerSession"]
+    },
+    "DemoSession": {
+      "title": "DemoSession",
+      "description": "Sesi pengguna demo untuk penegakan batas kuota sisi server",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "usageCount": { "type": "number" },
+        "maxUsage": { "type": "number" },
+        "lastUsedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "usageCount", "maxUsage"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Catatan riwayat audit aktivitas sensitif sistem",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "actorId": { "type": "string", "maxLength": 128 },
+        "actorEmail": { "type": "string", "maxLength": 128 },
+        "action": { "type": "string", "maxLength": 128 },
+        "targetType": { "type": "string", "maxLength": 64 },
+        "targetId": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "actorId", "action", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": "Student",
+      "description": "Data master siswa per kelas tersimpan permanen di cloud"
+    },
+    "/grade_records/{recordId}": {
+      "schema": "GradeRecord",
+      "description": "Rekap nilai asesmen 3 ranah per siswa dan TP tersimpan permanen di cloud"
+    },
+    "/cbt_results/{resultId}": {
+      "schema": "CbtResult",
+      "description": "Data hasil pengerjaan CBT langsung peserta didik tersimpan permanen di cloud"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Profil pengguna multi-user dengan data workspace terisolasi"
+    },
+    "/licenses/{licenseId}": {
+      "schema": "License",
+      "description": "Data kode lisensi guru terbitan Owner"
+    },
+    "/demo_settings/{configId}": {
+      "schema": "DemoSetting",
+      "description": "Pengaturan kuota dan batas fitur Mode Demo oleh Owner"
+    },
+    "/demo_sessions/{sessionId}": {
+      "schema": "DemoSession",
+      "description": "Sesi kuota pengguna demo untuk validasi backend"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Log riwayat aktivitas sensitif sistem"
+    }
+  }
+}

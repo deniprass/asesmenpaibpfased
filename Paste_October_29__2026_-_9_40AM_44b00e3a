@@ -1,0 +1,678 @@
+# MASTER PROMPT PENGEMBANGAN MODE DEMO DAN AKTIVASI LISENSI PERMANEN
+## PAIBP FASE D SMART LEARNING PRO 2026
+
+### 1. PERAN ANDA
+
+Anda adalah senior full-stack developer, software architect, UI/UX designer, dan application security engineer yang ahli dalam pengembangan aplikasi pendidikan berbasis AI.
+
+Tugas Anda adalah **memodifikasi aplikasi PAIBP Fase D yang sudah ada** dengan menambahkan sistem Mode Demo dan Aktivasi Lisensi Permanen.
+
+PENTING:
+- Jangan membangun ulang aplikasi dari nol.
+- Jangan menghapus atau merusak fitur yang sudah berfungsi.
+- Pertahankan desain, identitas visual, struktur navigasi, logika pembelajaran, generator soal, pengaturan asesmen, dan seluruh fitur aplikasi yang sudah ada.
+- Lakukan audit terhadap struktur kode aplikasi saat ini sebelum mengubahnya.
+- Integrasikan sistem lisensi ke dalam aplikasi yang sudah ada.
+- Pastikan perubahan kompatibel dengan teknologi dan backend yang telah digunakan aplikasi.
+- Jangan hanya membuat simulasi tampilan. Implementasikan logika aplikasi yang benar-benar berfungsi.
+
+Nama aplikasi: PAIBP FASE D SMART LEARNING PRO 2026.
+
+---
+
+### 2. TUJUAN UTAMA
+
+Buat sistem akses aplikasi dengan dua status utama:
+
+**A. MODE DEMO — AKSES PUBLIK TANPA LOGIN**
+
+Semua pengunjung dapat membuka dan mencoba aplikasi tanpa:
+- Membuat akun.
+- Login dengan Google.
+- Mengisi email.
+- Memasukkan password.
+- Memasukkan kode aktivasi.
+
+Pengunjung langsung masuk ke halaman aplikasi dengan status DEMO.
+
+Namun, akses dibatasi hanya untuk fitur-fitur tertentu.
+
+**B. MODE PREMIUM — AKTIVASI LISENSI PERMANEN**
+
+Pengguna yang telah membeli produk atau memperoleh hak akses dari owner dapat memasukkan kode aktivasi khusus.
+
+Setelah kode valid:
+- Status aplikasi berubah menjadi PREMIUM AKTIF.
+- Seluruh fitur premium terbuka.
+- Pengguna tidak perlu login untuk menggunakan aplikasi.
+- Lisensi tetap aktif pada perangkat dan browser yang telah diaktivasi.
+- Pengguna tidak perlu membayar atau memasukkan kode berulang kali selama lisensinya masih valid.
+- Lisensi tidak memiliki masa kedaluwarsa untuk jenis lisensi permanen.
+- Status lisensi tetap tersimpan setelah halaman dimuat ulang atau browser ditutup dan dibuka kembali.
+- Pengguna dapat menggunakan fitur premium tanpa harus terhubung ke halaman aktivasi setiap kali membuka aplikasi, selama sistem dapat memverifikasi lisensi sesuai mekanisme keamanan yang diterapkan.
+
+Gunakan istilah **LISENSI PERMANEN** untuk membedakan lisensi tanpa masa kedaluwarsa dari lisensi yang dapat dicabut karena penyalahgunaan atau alasan keamanan.
+
+---
+
+### 3. PEMBAGIAN FITUR DEMO DAN PREMIUM
+
+Lakukan audit terhadap seluruh fitur yang sudah tersedia pada aplikasi.
+
+Kelompokkan fitur menjadi dua kategori.
+
+#### A. Fitur yang DAPAT DIAKSES PADA MODE DEMO
+
+Mode demo harus cukup menarik agar calon pembeli dapat memahami manfaat aplikasi.
+
+Fitur demo yang direkomendasikan:
+
+1. Pengunjung dapat membuka dashboard aplikasi.
+2. Pengunjung dapat melihat deskripsi, panduan, dan manfaat aplikasi.
+3. Pengunjung dapat memilih jenjang atau kelas yang tersedia.
+4. Pengunjung dapat melihat daftar elemen dan materi PAIBP Fase D.
+5. Pengunjung dapat melihat contoh Capaian Pembelajaran (CP) dan Tujuan Pembelajaran (TP).
+6. Pengunjung dapat membuka contoh kisi-kisi asesmen.
+7. Pengunjung dapat melihat contoh rubrik penilaian.
+8. Pengunjung dapat membuat sejumlah kecil soal percobaan menggunakan materi yang tersedia.
+9. Pengunjung dapat mencoba maksimal 5 soal per sesi demo.
+10. Pengunjung dapat mencoba maksimal 2 kali proses generasi soal per sesi demo.
+11. Pengunjung dapat melihat contoh hasil asesmen.
+12. Pengunjung dapat melihat pratinjau fitur premium yang terkunci.
+13. Pengunjung dapat membuka halaman aktivasi lisensi.
+
+Batas demo di atas harus dibuat sebagai konfigurasi yang dapat diubah oleh owner.
+
+Contoh konfigurasi:
+
+DEMO_CONFIG = {
+  maxQuestionsPerGeneration: 5,
+  maxGenerationsPerSession: 2,
+  allowFullExport: false,
+  allowBulkGeneration: false,
+  allowAdvancedAssessment: false,
+  allowFullQuestionBank: false,
+  allowPremiumTemplates: false
+}
+
+Sesuaikan struktur konfigurasi tersebut dengan bahasa pemrograman dan arsitektur aplikasi yang sebenarnya.
+
+Jangan memaksakan nama variabel atau struktur data jika tidak sesuai dengan kode aplikasi yang sudah ada.
+
+**Catatan:** Batas demo harus diterapkan pada proses yang benar-benar dijalankan, bukan hanya melalui label atau tampilan antarmuka.
+
+#### B. Fitur yang HANYA DAPAT DIAKSES PADA MODE PREMIUM
+
+Setelah lisensi berhasil diaktifkan, pengguna memperoleh akses ke seluruh fitur aplikasi yang sebelumnya sudah tersedia, termasuk:
+
+1. Generator soal PAIBP Fase D otomatis.
+2. Pengaturan kelas, fase, semester, elemen, materi, dan tujuan pembelajaran.
+3. Pengaturan jenis asesmen dan jumlah soal.
+4. Pengaturan bentuk soal, termasuk pilihan ganda dan uraian.
+5. Pembuatan soal berdasarkan tingkat kognitif Bloom C1–C6.
+6. Pembuatan soal berdasarkan pendekatan SOLO Taxonomy.
+7. Penerapan pendekatan pembelajaran mendalam atau deep learning.
+8. Pembuatan kisi-kisi soal otomatis.
+9. Pembuatan kunci jawaban secara terpisah.
+10. Pembuatan pedoman penskoran.
+11. Pembuatan rubrik penilaian.
+12. Pembuatan KKTP atau kriteria ketercapaian tujuan pembelajaran.
+13. Pembuatan perencanaan asesmen.
+14. Analisis hasil asesmen.
+15. Rekomendasi remedial dan pengayaan.
+16. Pengolahan nilai.
+17. Pembuatan laporan hasil asesmen.
+18. Ekspor hasil ke format yang telah didukung aplikasi.
+19. Akses seluruh materi, template, dan pengaturan lanjutan.
+20. Seluruh fitur premium lain yang sudah tersedia pada versi aplikasi saat ini.
+
+Jangan menghapus fitur yang sudah ada hanya karena fitur tersebut tidak disebutkan secara eksplisit dalam daftar ini.
+
+**Prinsip utama:** pengguna premium memperoleh seluruh fitur aplikasi sesuai versi yang dimiliki, tanpa batasan demo.
+
+---
+
+### 4. DESAIN HALAMAN AKTIVASI
+
+Buat halaman aktivasi yang profesional, modern, responsif, dan konsisten dengan desain aplikasi.
+
+Judul halaman:
+
+**Aktivasi Lisensi Premium**
+
+Subjudul:
+
+"Masukkan kode aktivasi yang Anda peroleh dari owner untuk membuka seluruh fitur PAIBP Fase D SMART LEARNING PRO 2026."
+
+Komponen halaman:
+
+1. Logo dan nama aplikasi.
+2. Ilustrasi atau ikon lisensi premium.
+3. Kolom input kode aktivasi.
+4. Tombol "Aktifkan Lisensi".
+5. Indikator proses verifikasi.
+6. Pesan keberhasilan atau kegagalan.
+7. Informasi manfaat lisensi permanen.
+8. Tombol kembali ke Mode Demo.
+9. Tombol bantuan atau kontak owner yang dapat dikonfigurasi.
+10. Informasi bahwa lisensi berlaku sesuai ketentuan yang ditetapkan owner.
+
+Kolom kode aktivasi harus:
+- Menerima input kode dengan aman.
+- Menghapus spasi yang tidak diperlukan di awal dan akhir input.
+- Menangani huruf besar dan kecil sesuai aturan kode yang ditetapkan.
+- Tidak menampilkan kode rahasia owner.
+- Tidak menyimpan kode aktivasi mentah dalam log.
+- Tidak mengungkap alasan internal yang dapat membantu penyerang menebak kode valid.
+
+Pesan kesalahan untuk pengguna harus sederhana, misalnya:
+
+"Kode aktivasi tidak valid atau tidak dapat digunakan. Silakan periksa kembali kode Anda atau hubungi owner."
+
+Jangan membedakan pesan pengguna untuk kode yang salah, kode yang dicabut, atau kode yang belum tersedia jika perbedaan tersebut dapat membantu penyalahgunaan sistem.
+
+---
+
+### 5. ALUR AKTIVASI LISENSI
+
+Implementasikan alur berikut.
+
+#### LANGKAH 1 — PENGUNJUNG MEMBUKA APLIKASI
+
+Ketika seseorang membuka aplikasi untuk pertama kalinya:
+
+- Aplikasi dapat langsung digunakan tanpa login.
+- Sistem menetapkan status awal sebagai DEMO.
+- Pengguna dapat mencoba fitur demo.
+- Pengguna melihat tombol "Aktivasi Premium" atau "Buka Akses Lengkap".
+
+#### LANGKAH 2 — PENGGUNA MEMASUKKAN KODE
+
+Ketika tombol aktivasi diklik:
+
+- Tampilkan halaman aktivasi.
+- Pengguna memasukkan kode yang diperoleh dari owner.
+- Pengguna menekan tombol "Aktifkan Lisensi".
+- Aplikasi mengirim permintaan verifikasi melalui mekanisme yang aman.
+
+#### LANGKAH 3 — SISTEM MEMVERIFIKASI KODE
+
+Sistem memeriksa:
+
+- Apakah kode terdaftar.
+- Apakah kode sesuai dengan format yang diharapkan.
+- Apakah kode masih aktif.
+- Apakah kode belum digunakan jika lisensi bersifat sekali pakai.
+- Apakah lisensi sudah dicabut.
+- Apakah terdapat batas aktivasi perangkat atau browser.
+- Apakah permintaan memenuhi batas percobaan aktivasi.
+
+Semua pemeriksaan yang menentukan keabsahan lisensi harus dilakukan pada backend yang dipercaya, bukan hanya melalui JavaScript di browser.
+
+Jika kode valid dan memenuhi seluruh ketentuan, sistem mengaktifkan lisensi.
+
+Jika kode tidak valid, aplikasi tetap dalam Mode Demo.
+
+#### LANGKAH 4 — AKTIVASI BERHASIL
+
+Tampilkan notifikasi:
+
+**SELAMAT! LISENSI PREMIUM BERHASIL DIAKTIFKAN**
+
+"Seluruh fitur PAIBP Fase D SMART LEARNING PRO 2026 kini terbuka untuk Anda. Lisensi permanen Anda telah aktif."
+
+Tambahkan informasi:
+- Status: PREMIUM AKTIF.
+- Jenis lisensi: PERMANEN.
+- Tanggal aktivasi.
+- ID lisensi atau kode referensi yang aman untuk ditampilkan.
+- Tombol "Mulai Menggunakan Aplikasi".
+
+Jangan menampilkan seluruh kode aktivasi pada halaman status setelah aktivasi.
+
+Setelah berhasil:
+- Perbarui status akses aplikasi.
+- Buka seluruh fitur premium.
+- Hilangkan batas demo untuk lisensi tersebut.
+- Pertahankan hasil pekerjaan pengguna yang sudah dibuat selama demo, apabila memungkinkan.
+- Simpan status aktivasi menggunakan mekanisme yang aman dan sesuai dengan arsitektur aplikasi.
+
+#### LANGKAH 5 — PENGGUNA MEMBUKA APLIKASI KEMBALI
+
+Ketika pengguna membuka aplikasi pada kesempatan berikutnya:
+
+1. Periksa apakah terdapat informasi lisensi yang tersimpan.
+2. Verifikasi status lisensi dengan backend atau mekanisme verifikasi tepercaya yang sesuai.
+3. Jika lisensi masih sah, buka Mode Premium.
+4. Jika belum ada lisensi, tampilkan Mode Demo.
+5. Jika lisensi dicabut atau tidak sah, kembalikan akses ke Mode Demo dan tampilkan pesan yang sesuai.
+
+Jangan meminta kode aktivasi berulang kali pada penggunaan normal.
+
+---
+
+### 6. SISTEM PEMBUATAN KODE AKTIVASI OLEH OWNER
+
+Buat mekanisme pengelolaan lisensi khusus owner.
+
+Jika aplikasi sudah memiliki dashboard admin, integrasikan pengelolaan lisensi ke dalam dashboard tersebut.
+
+Jika belum tersedia, siapkan mekanisme administrasi yang aman melalui backend atau panel admin terproteksi.
+
+Owner harus dapat:
+
+1. Membuat kode aktivasi baru.
+2. Membuat satu kode untuk satu pembeli.
+3. Membuat beberapa kode sekaligus.
+4. Menentukan jenis lisensi.
+5. Melihat status setiap lisensi.
+6. Melihat tanggal pembuatan lisensi.
+7. Melihat tanggal aktivasi.
+8. Melihat jumlah aktivasi.
+9. Menentukan batas jumlah perangkat.
+10. Mencabut lisensi yang disalahgunakan.
+11. Membuat kode pengganti.
+12. Mengunduh daftar kode yang belum didistribusikan, jika diperlukan.
+13. Menandai lisensi berdasarkan nomor pesanan atau ID pelanggan yang tidak sensitif.
+
+Jenis lisensi yang disediakan:
+
+**A. Lisensi Permanen Individual**
+- Tidak memiliki tanggal kedaluwarsa.
+- Berlaku untuk satu pemegang lisensi.
+- Jumlah perangkat mengikuti kebijakan owner.
+- Dapat dicabut jika terjadi penyalahgunaan sesuai ketentuan.
+
+**B. Lisensi Permanen Multi-Perangkat**
+- Tidak memiliki tanggal kedaluwarsa.
+- Dapat digunakan pada sejumlah perangkat sesuai batas yang ditetapkan owner.
+
+**C. Lisensi Sekali Pakai**
+- Kode hanya dapat digunakan untuk aktivasi pertama.
+- Setelah aktivasi berhasil, kode tidak dapat digunakan kembali untuk membuat lisensi baru.
+- Pengguna yang telah teraktivasi tetap dapat menggunakan lisensinya sesuai kebijakan perangkat dan pemulihan akses.
+
+Sediakan pengaturan agar owner dapat mengubah kebijakan lisensi tanpa harus membangun ulang seluruh aplikasi.
+
+---
+
+### 7. FORMAT KODE AKTIVASI
+
+Gunakan kode aktivasi yang sulit ditebak.
+
+Jangan menggunakan kode sederhana seperti:
+- PREMIUM123
+- AKTIF2026
+- PAIBP12345
+- ADMIN2026
+
+Gunakan kode acak yang memiliki entropi memadai, misalnya format visual:
+
+PAIBP-7K9M-X4QD-8R2W-6NTP
+
+Contoh tersebut hanya format ilustrasi, bukan kode aktivasi yang benar-benar valid.
+
+Persyaratan:
+
+- Kode dihasilkan menggunakan generator acak kriptografis.
+- Kode tidak dibuat berdasarkan nomor urut sederhana.
+- Kode tidak dapat ditebak dari kode sebelumnya.
+- Kode tidak ditanam langsung di source code frontend.
+- Kode tidak ditampilkan pada halaman publik.
+- Kode tidak dimasukkan ke prompt AI sebagai rahasia.
+- Kode tidak dikirim ke pihak ketiga yang tidak berkepentingan.
+- Sistem tidak menyimpan kode mentah secara tidak perlu.
+
+Jika kode harus dapat diverifikasi di kemudian hari, simpan representasi yang aman, seperti hash kriptografis kode, dan gunakan mekanisme verifikasi yang sesuai.
+
+Pastikan sistem tetap dapat menjalankan proses aktivasi sekali pakai secara atomik agar dua permintaan bersamaan tidak dapat mengaktifkan kode yang sama untuk dua lisensi berbeda secara tidak sengaja.
+
+---
+
+### 8. KEAMANAN LISENSI
+
+Implementasikan keamanan secara serius.
+
+Jangan membuat sistem lisensi yang hanya mengandalkan:
+
+- Variabel JavaScript seperti `isPremium = true`.
+- Local Storage yang dapat diubah pengguna.
+- Session Storage yang dapat diubah pengguna.
+- Parameter URL seperti `?premium=true`.
+- Kode aktivasi yang disimpan di source code frontend.
+- Pemeriksaan akses yang hanya dilakukan pada tombol atau tampilan.
+- Pesan tersembunyi di dalam prompt AI.
+- Kode admin yang dapat dibaca dari browser.
+
+PENTING:
+
+Local Storage boleh digunakan untuk menyimpan informasi tampilan atau cache status, tetapi tidak boleh menjadi satu-satunya bukti bahwa pengguna berhak memperoleh akses premium.
+
+Gunakan backend tepercaya untuk memverifikasi lisensi dan memberikan otorisasi atas operasi premium.
+
+Jika aplikasi menggunakan Firebase, Supabase, atau backend lain, sesuaikan implementasi dengan layanan yang benar-benar digunakan.
+
+Jika belum ada backend, evaluasi pilihan backend yang sesuai dan implementasikan solusi yang paling kompatibel dengan proyek.
+
+Lindungi sistem dari:
+- Tebak kode aktivasi secara berulang.
+- Penyalahgunaan endpoint aktivasi.
+- Penggunaan ulang kode sekali pakai.
+- Pemalsuan status premium di browser.
+- Manipulasi permintaan API.
+- Akses tanpa izin ke data lisensi.
+- Pengungkapan kode rahasia owner.
+- Aktivasi massal otomatis.
+
+Terapkan pembatasan percobaan, validasi input, autentikasi khusus owner, otorisasi backend, dan pencatatan peristiwa keamanan yang tidak menyimpan kode rahasia.
+
+Jangan menjanjikan perlindungan mutlak. Jelaskan dalam dokumentasi teknis jika ada keterbatasan arsitektur atau risiko yang masih tersisa.
+
+---
+
+### 9. PENGUNCIAN FITUR PREMIUM
+
+Jangan hanya menyembunyikan tombol premium.
+
+Terapkan pemeriksaan akses pada setiap fungsi penting yang memerlukan lisensi.
+
+Contoh fungsi yang perlu dilindungi:
+
+- Generate soal dalam jumlah penuh.
+- Generate kisi-kisi lengkap.
+- Generate rubrik dan pedoman penskoran lengkap.
+- Generate instrumen asesmen lanjutan.
+- Ekspor dokumen premium.
+- Pengolahan hasil asesmen lanjutan.
+- Akses ke template premium.
+- Penggunaan fitur lain yang ditetapkan sebagai premium.
+
+Buat satu mekanisme pemeriksaan izin yang konsisten dan integrasikan dengan struktur aplikasi.
+
+Misalnya, secara konseptual:
+
+- `getAccessStatus()`
+- `canUseFeature(featureName)`
+- `verifyLicense()`
+- `activateLicense(activationCode)`
+
+Nama fungsi boleh disesuaikan dengan arsitektur proyek.
+
+Setiap fungsi premium harus memeriksa izin sebelum melakukan pekerjaan atau mengakses sumber daya yang dilindungi.
+
+Untuk proses AI, batas jumlah soal, jumlah generasi, dan akses fitur harus divalidasi pada backend apabila backend mengendalikan proses tersebut.
+
+Jangan mengandalkan kondisi frontend seperti:
+
+`if (isPremium) { ... }`
+
+sebagai satu-satunya mekanisme keamanan.
+
+Jika aplikasi sepenuhnya berjalan di browser tanpa backend, jelaskan bahwa sistem lisensi dapat dilewati oleh pengguna yang memodifikasi kode lokal. Jangan menyatakan bahwa sistem tersebut aman secara penuh. Prioritaskan pemindahan verifikasi lisensi dan operasi premium yang penting ke backend.
+
+---
+
+### 10. DESAIN PENGALAMAN PENGGUNA
+
+Buat tampilan status akses yang mudah dipahami.
+
+#### Saat Mode Demo
+
+Tampilkan badge:
+
+**MODE DEMO**
+
+Teks pendamping:
+
+"Anda sedang mencoba versi demo. Aktifkan lisensi untuk membuka seluruh fitur aplikasi."
+
+Tambahkan tombol:
+
+**AKTIFKAN PREMIUM**
+
+Fitur premium yang terkunci tetap boleh ditampilkan sebagai pratinjau agar calon pengguna mengetahui manfaatnya.
+
+Ketika pengguna mencoba fitur premium, tampilkan dialog:
+
+**Fitur Ini Tersedia pada Versi Premium**
+
+"Anda sedang menggunakan Mode Demo. Aktifkan lisensi permanen untuk menikmati seluruh fitur PAIBP Fase D SMART LEARNING PRO 2026."
+
+Tombol:
+- "Aktifkan Lisensi"
+- "Lanjutkan Mode Demo"
+
+#### Saat Mode Premium
+
+Tampilkan badge:
+
+**PREMIUM AKTIF**
+
+Teks pendamping:
+
+"Lisensi permanen aktif. Seluruh fitur premium tersedia untuk Anda."
+
+Jangan menampilkan promosi aktivasi secara berlebihan kepada pengguna yang sudah aktif.
+
+#### Prinsip UI/UX
+
+- Responsif untuk desktop, tablet, dan ponsel.
+- Tidak mengganggu alur kerja guru.
+- Bahasa Indonesia yang jelas dan profesional.
+- Tidak membuat pengguna mengira aplikasi error saat fitur terkunci.
+- Memiliki indikator loading saat kode diverifikasi.
+- Menampilkan pesan error yang ramah.
+- Tidak menghapus hasil pekerjaan pengguna ketika status akses berubah.
+- Memiliki akses yang jelas menuju bantuan owner.
+
+---
+
+### 11. PENYIMPANAN STATUS LISENSI
+
+Rancang model data lisensi sesuai backend aplikasi.
+
+Secara konseptual, data lisensi dapat mencakup:
+
+- `licenseId`
+- `activationCodeHash`
+- `licenseType`
+- `status`
+- `createdAt`
+- `activatedAt`
+- `expiresAt`
+- `maxDevices`
+- `activationCount`
+- `revokedAt`
+- `orderReference`
+
+Untuk lisensi permanen, `expiresAt` dapat bernilai kosong atau null sesuai desain database.
+
+Hindari menyimpan data pribadi pembeli yang tidak diperlukan.
+
+Jika aplikasi perlu mengenali pengguna tanpa login, gunakan mekanisme identitas instalasi atau perangkat yang sesuai dengan arsitektur aplikasi. Jelaskan bahwa identitas browser/perangkat dapat hilang akibat penghapusan data, penggunaan mode privat, pergantian browser, atau perubahan perangkat.
+
+Jangan mengklaim bahwa Local Storage dapat mengenali pengguna secara permanen di semua perangkat.
+
+Jika pengguna kehilangan akses, sediakan prosedur pemulihan lisensi melalui owner.
+
+Jika owner menetapkan batas perangkat, sediakan proses untuk mengatur ulang aktivasi perangkat sesuai kebijakan yang berlaku.
+
+---
+
+### 12. PEMISAHAN AKSES OWNER DAN PENGGUNA
+
+Buat pemisahan yang tegas antara:
+
+**OWNER / ADMIN**
+- Membuat dan mengelola lisensi.
+- Melihat statistik aktivasi.
+- Mencabut lisensi.
+- Mengatur batas demo.
+- Mengatur kebijakan perangkat.
+- Mengelola pengaturan sistem lisensi.
+
+**PENGGUNA DEMO**
+- Mengakses fitur demo.
+- Melihat pratinjau fitur premium.
+- Mengaktifkan lisensi.
+
+**PENGGUNA PREMIUM**
+- Mengakses semua fitur sesuai lisensi.
+- Melihat status lisensi.
+- Menggunakan aplikasi tanpa login dalam penggunaan normal, jika mekanisme lisensi aplikasi mendukungnya.
+- Meminta bantuan atau pemulihan akses.
+
+Jangan memberikan hak administratif kepada pengguna premium biasa.
+
+Akses owner harus dilindungi oleh autentikasi yang sesuai dan otorisasi backend. Jangan menggunakan kode aktivasi pengguna sebagai pengganti autentikasi admin.
+
+---
+
+### 13. PENANGANAN KONDISI KHUSUS
+
+Pastikan sistem menangani kondisi berikut.
+
+**A. Kode salah**
+- Tampilkan pesan kesalahan.
+- Tetap berada di Mode Demo.
+- Jangan mengubah status lisensi.
+
+**B. Kode sudah digunakan**
+- Tolak aktivasi baru jika kebijakan lisensi menyatakan kode hanya dapat digunakan sekali.
+- Jangan mencabut lisensi pemegang sebelumnya hanya karena kode dicoba oleh orang lain.
+
+**C. Kode dicabut**
+- Tolak aktivasi baru.
+- Lisensi yang terkait tidak boleh memperoleh otorisasi premium setelah pencabutan terverifikasi.
+- Tangani sesi aktif dan cache status sesuai kebijakan keamanan.
+
+**D. Koneksi internet terputus**
+- Jangan menganggap kode baru valid tanpa verifikasi.
+- Tangani status verifikasi yang belum tersedia secara jelas.
+- Jika kebijakan aplikasi mengizinkan penggunaan offline bagi lisensi yang sudah sah, terapkan mekanisme token bertanda tangan dan masa berlaku cache yang aman.
+- Jelaskan bahwa pencabutan lisensi tidak dapat diketahui seketika ketika perangkat benar-benar offline.
+
+**E. Pengguna mengganti browser atau perangkat**
+- Ikuti kebijakan jumlah perangkat.
+- Sediakan prosedur pemulihan lisensi.
+- Jangan menganggap lisensi otomatis hilang hanya karena cache lokal terhapus.
+
+**F. Pengguna mencoba melewati batas demo**
+- Validasi batas penggunaan pada backend.
+- Terapkan pembatasan percobaan yang sesuai.
+- Jangan hanya mengandalkan penghitung di browser.
+
+**G. Permintaan aktivasi bersamaan**
+- Gunakan operasi database yang atomik untuk mencegah penggunaan ganda kode sekali pakai.
+
+**H. Owner membuat kode baru**
+- Pastikan kode baru tersimpan dengan aman.
+- Tampilkan kode hanya kepada owner yang berwenang.
+- Jangan mencatat kode lengkap pada log aplikasi.
+
+---
+
+### 14. PERSYARATAN IMPLEMENTASI
+
+Sebelum memulai perubahan:
+
+1. Periksa seluruh file proyek.
+2. Identifikasi framework, bahasa pemrograman, struktur komponen, dan backend.
+3. Temukan alur navigasi utama.
+4. Identifikasi semua fungsi yang perlu dibatasi.
+5. Identifikasi sistem penyimpanan data yang telah digunakan.
+6. Periksa apakah aplikasi telah memiliki autentikasi atau dashboard admin.
+7. Susun strategi integrasi yang meminimalkan perubahan terhadap fitur yang sudah ada.
+
+Kemudian implementasikan:
+
+1. Mode Demo sebagai status awal.
+2. Halaman aktivasi lisensi.
+3. Sistem validasi kode aktivasi.
+4. Penyimpanan status lisensi.
+5. Pemeriksaan izin pada fitur premium.
+6. Dashboard atau mekanisme administrasi owner.
+7. Pengaturan batas penggunaan demo.
+8. Penanganan kesalahan dan pemulihan akses.
+9. Dokumentasi pengaturan dan konfigurasi.
+10. Pengujian menyeluruh.
+
+Jangan berhenti setelah menghasilkan mockup atau desain UI.
+
+Implementasikan perubahan pada kode aplikasi, integrasikan dengan backend yang tersedia, dan periksa apakah seluruh fitur lama masih berfungsi.
+
+Jika diperlukan konfigurasi layanan eksternal, jelaskan dengan jelas variabel lingkungan dan langkah yang harus dilakukan owner. Jangan meminta pengguna memasukkan kunci rahasia server ke dalam kode frontend.
+
+---
+
+### 15. PENGUJIAN WAJIB
+
+Lakukan pengujian terhadap skenario berikut.
+
+| No. | Skenario | Hasil yang Diharapkan |
+|---|---|---|
+| 1 | Pengunjung pertama kali membuka aplikasi | Langsung masuk Mode Demo tanpa login |
+| 2 | Pengguna mencoba membuat soal demo | Berhasil sesuai batas demo |
+| 3 | Pengguna melampaui batas demo | Proses dibatasi dengan pesan yang jelas |
+| 4 | Pengguna mencoba fitur premium tanpa lisensi | Akses ditolak |
+| 5 | Pengguna memasukkan kode salah | Tetap dalam Mode Demo |
+| 6 | Pengguna memasukkan kode valid | Lisensi berhasil diaktifkan |
+| 7 | Pengguna membuka fitur premium setelah aktivasi | Seluruh fitur sesuai lisensi dapat digunakan |
+| 8 | Pengguna memuat ulang halaman | Status lisensi dipulihkan sesuai mekanisme yang aman |
+| 9 | Pengguna menutup dan membuka browser kembali | Lisensi tetap dikenali jika data dan kondisi verifikasi masih valid |
+| 10 | Pengguna mencoba menggunakan kode sekali pakai untuk kedua kalinya | Aktivasi baru ditolak |
+| 11 | Pengguna mengubah Local Storage secara manual | Tidak memperoleh hak premium tanpa otorisasi yang sah |
+| 12 | Pengguna mencoba memanggil endpoint premium secara langsung | Backend tetap memeriksa otorisasi |
+| 13 | Owner mencabut lisensi | Akses premium dihentikan sesuai kebijakan verifikasi |
+| 14 | Owner membuat kode aktivasi baru | Kode tersimpan dengan benar |
+| 15 | Pengguna premium membuka kembali aplikasi | Tidak diminta memasukkan kode berulang kali pada penggunaan normal |
+| 16 | Koneksi terputus saat aktivasi | Tidak terjadi aktivasi palsu atau status yang tidak konsisten |
+| 17 | Dua pengguna mencoba kode yang sama secara bersamaan | Sistem mencegah aktivasi ganda yang tidak diizinkan |
+| 18 | Fitur lama aplikasi digunakan setelah perubahan | Tidak terjadi regresi fungsi |
+
+Perbaiki setiap masalah yang ditemukan sebelum menyatakan implementasi selesai.
+
+---
+
+### 16. HASIL AKHIR YANG HARUS DIBERIKAN
+
+Setelah implementasi, berikan:
+
+1. Ringkasan perubahan yang telah dilakukan.
+2. Daftar file yang dibuat atau dimodifikasi.
+3. Penjelasan alur Mode Demo.
+4. Penjelasan alur aktivasi permanen.
+5. Penjelasan sistem pengelolaan kode oleh owner.
+6. Penjelasan sistem keamanan dan batasannya.
+7. Langkah konfigurasi backend yang diperlukan.
+8. Langkah membuat kode aktivasi pertama.
+9. Cara menguji Mode Demo dan Premium.
+10. Hasil pengujian setiap skenario penting.
+11. Daftar pekerjaan yang masih memerlukan konfigurasi manual.
+
+Jangan menyatakan bahwa sistem telah selesai atau aman sebelum implementasi dan pengujian benar-benar dilakukan.
+
+Jika terdapat kendala karena keterbatasan platform, jelaskan kendala tersebut dan berikan solusi yang kompatibel.
+
+---
+
+### 17. INSTRUKSI FINAL
+
+Sekarang lakukan audit terhadap proyek PAIBP FASE D SMART LEARNING PRO 2026 yang sedang terbuka.
+
+Implementasikan sistem Mode Demo dan Aktivasi Lisensi Permanen berdasarkan seluruh spesifikasi di atas.
+
+**Prioritas utama:**
+1. Aplikasi dapat dicoba semua orang tanpa login.
+2. Fitur demo benar-benar dibatasi.
+3. Kode aktivasi hanya dapat diverifikasi melalui mekanisme tepercaya.
+4. Aktivasi memberikan akses penuh secara permanen sesuai kebijakan lisensi.
+5. Status premium tetap dikenali pada penggunaan berikutnya tanpa aktivasi berulang.
+6. Owner dapat membuat, mengelola, dan mencabut lisensi.
+7. Fitur aplikasi yang sudah ada tetap berfungsi.
+8. Sistem tidak mengandalkan manipulasi frontend sebagai satu-satunya perlindungan.
+9. Aplikasi siap diuji dan dipublikasikan setelah konfigurasi yang diperlukan selesai.
+
+Jangan hanya memberikan saran atau contoh kode terpisah. Kerjakan integrasi langsung pada proyek yang tersedia sejauh didukung oleh lingkungan pengembangan.
+
+Jika ada keputusan teknis yang belum ditentukan, pilih pendekatan yang paling aman, sederhana, hemat biaya, dan kompatibel dengan arsitektur aplikasi yang sudah ada.
